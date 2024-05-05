@@ -1,0 +1,12 @@
+<h1 class="title">
+    {{ title }}
+</h1>
+
+<!-- List -->
+<div class="list-container">
+    <p-card [header]="item.title" *ngFor="let item of featureList" (click)="navigateTo(item)">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="assets/images/{{item.imgUrl}}" />
+        </ng-template>
+    </p-card>
+</div>

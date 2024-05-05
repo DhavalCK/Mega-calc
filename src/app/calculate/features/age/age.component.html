@@ -1,0 +1,52 @@
+<div class="age-container">
+    <form class="form">
+        <div class="form-group">
+            <label>Date of Birth: </label>
+            <p-calendar
+            [(ngModel)]="dob"
+            [showIcon]="true"
+            name="dob"
+
+            [readonlyInput]="true"
+            [inputStyle]="{ width: 'auto', height: '50px', padding: '10px' }"
+            placeholder="Select Date of Birth"
+            dateFormat="dd M yy"
+            ></p-calendar>
+        </div>
+        <div class="form-group">
+            <label>Today: </label>
+            <p-calendar
+            [(ngModel)]="today"
+            name="today"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            [inputStyle]="{ width: 'auto', height: '50px', padding: '10px' }"
+            placeholder="Select Date"
+            dateFormat="dd M yy"
+            [disabled]="true"
+            ></p-calendar>
+        </div>
+
+        <div *ngIf="submitClick">
+          <p-card header="Age" class="age-card">
+            <h4>
+              {{ age }} years {{ 12 - months }} months old
+            </h4>
+          </p-card>
+          <p-card class="birthday-card" header="Birthday Countdown">
+            <ng-template pTemplate="content">
+              <div style="display: flex; align-items: center;">
+                <i class="pi pi-birthday-cake" style="font-size: 2rem; margin-right: 1rem;"></i>
+                <div>
+                  <h4>Next Birthday in:</h4>
+                  <p>{{ months }} months, {{ days }} days, {{ hours }} hours, {{ minutes }} minutes, {{ seconds }} seconds</p>
+                </div>
+              </div>
+            </ng-template>
+          </p-card>
+        </div>
+        
+      <button pButton type="button" label="Calculate" (click)="calculateAge()"></button>
+    </form>
+  </div>
+  

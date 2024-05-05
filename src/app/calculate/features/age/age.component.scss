@@ -1,0 +1,62 @@
+::ng-deep .age-container {
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            label {
+                font-weight: bold;
+            }
+        }
+
+        ::ng-deep .p-button {
+            padding: 6px 12px;
+            .p-button-label {
+                font-weight: 400 !important;
+            }
+        }
+    }
+
+    .p-card {
+        padding: 12px 12px;
+        margin-bottom: 16px;
+        color: black;
+        text-align: center;
+    }
+
+    .age-card .p-card{
+        background: hsla(213, 100%, 65%, 1);
+        background: linear-gradient(135deg, hsla(213, 100%, 65%, 1) 0%, hsla(203, 89%, 71%, 1) 30%, hsla(0, 0%, 96%, 1) 100%);
+        background: -moz-linear-gradient(135deg, hsla(213, 100%, 65%, 1) 0%, hsla(203, 89%, 71%, 1) 30%, hsla(0, 0%, 96%, 1) 100%);
+        background: -webkit-linear-gradient(135deg, hsla(213, 100%, 65%, 1) 0%, hsla(203, 89%, 71%, 1) 30%, hsla(0, 0%, 96%, 1) 100%);
+    }
+
+    .birthday-card {
+        .p-card {
+            background: hsla(54, 62%, 85%, 1);
+            background: radial-gradient(circle, hsla(54, 62%, 85%, 1) 0%, hsla(196, 80%, 79%, 1) 50%, hsla(6, 100%, 78%, 1) 80%);
+            background: -moz-radial-gradient(circle, hsla(54, 62%, 85%, 1) 0%, hsla(196, 80%, 79%, 1) 50%, hsla(6, 100%, 78%, 1) 100%);
+            background: -webkit-radial-gradient(circle, hsla(54, 62%, 85%, 1) 0%, hsla(196, 80%, 79%, 1) 50%, hsla(6, 100%, 78%, 1) 100%);
+            animation: animateGradient 5s ease-in-out infinite alternate;
+            background-size: 200% 200%;
+            .p-card-title  {
+                padding-bottom: 12px;
+            }
+        }
+    }
+}
+
+@keyframes animateGradient {
+    0%, 100% {
+      background-position: 0% 0%;
+    }
+    35% {
+      background-position: 50% 0%;
+    }
+    70% {
+      background-position: 100% 100%;
+    }
+  }
