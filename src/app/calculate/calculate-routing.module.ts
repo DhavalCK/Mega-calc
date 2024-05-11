@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AgeComponent } from './features/age/age.component';
 import { CalculateComponent } from './calculate.component';
+import { ReturnPercentComponent } from './features/return-percent/return-percent.component';
 
 const routes: Routes = [
   { 
@@ -10,8 +11,13 @@ const routes: Routes = [
     component: CalculateComponent,
     children: [
       {
-        path: 'age', component: AgeComponent
-      } 
+        path: 'age',
+        component: AgeComponent
+      }, 
+      {
+        path: 'return-percent',
+        component: ReturnPercentComponent
+      }
     ]
   }
   // Define other routes as needed

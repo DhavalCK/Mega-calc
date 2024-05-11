@@ -1,0 +1,51 @@
+.card {
+    width: 200px;
+    height: 150px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+    gap: 10px;
+
+    .percentage-label {
+      font-size: 28px;
+      font-weight: bold;
+    }
+  
+    .value-label {
+      font-weight: bold;
+      font-size: 40px;
+    }
+
+    color: lightsalmon;
+    background-color: #FDFFC2;
+
+    &.positive {
+        background-color: #eafff7;
+
+        .percentage-label {
+            color: #76ccad;
+        }
+
+        .value-label {
+            color: #68b397;
+        }
+    }
+
+    &.negative {
+        background-color: #fceeed;
+        .inter-label {
+            color: #c74e3f;
+        }
+
+        .value-label {
+            color: #b14638;
+        }
+    }
+}
+  

@@ -1,3 +1,4 @@
 export enum FeatureTitle {
-    'AGE' = 'Age Calculation' 
+    'AGE' = 'Age Calculation',
+    'RETURN_PERCENT' = "Return Percent Calculation"
 }
