@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteConfig } from '../shared/enums/route-config.enum';
 import { FeatureTitle } from '../shared/enums/feature-title.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calculate',
@@ -13,15 +14,13 @@ export class CalculateComponent implements OnInit {
   routeConfig: any = RouteConfig as Object;
   featureTitle: any = FeatureTitle as Object;
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
     this.title = this.getTitleByRoute();
   }
 
   ngOnInit() {
-    // let path = mainUrl.slice(mainUrl.indexOf('calculate/'));
-    // KeyByRoute[path];
-    // console.log(KeyByRoute)
-    // console.log('key',key);
   }
 
   getTitleByRoute(): string {
@@ -34,5 +33,9 @@ export class CalculateComponent implements OnInit {
       }
     }
     return 'Calculation';
+  }
+
+  back(): void {
+    this.router.navigateByUrl('/')
   }
 }
