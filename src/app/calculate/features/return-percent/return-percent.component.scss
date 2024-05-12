@@ -15,11 +15,17 @@
     .percentage-label {
       font-size: 28px;
       font-weight: bold;
+      @media screen and (max-width: 300px) {
+        font-size: 24px;
+      }
     }
   
     .value-label {
       font-weight: bold;
       font-size: 40px;
+      @media screen and (max-width: 300px) {
+        font-size: 36px;
+      }
     }
 
     color: lightsalmon;

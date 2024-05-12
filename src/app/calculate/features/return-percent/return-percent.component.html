@@ -19,56 +19,68 @@
             <p-inputNumber 
                 [(ngModel)]="currentValue" 
                 inputId="currentValue" 
-                mode="decimal"
                 name="currentValue" 
+                mode="currency" 
+                currency="INR"
                 [minFractionDigits]="0" 
                 [maxFractionDigits]="2" /> 
         </div>
 
-        <div class="form-group" *ngIf="returnType === ReturnTypeEnum.PERCENTAGE">
-            <label> Target value: </label>
-            <p-inputNumber 
-                [(ngModel)]="targetValue" 
-                inputId="targetValue" 
-                mode="decimal"
-                name="targetValue" 
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2" /> 
-        </div>
+        <ng-container *ngIf="returnType === ReturnTypeEnum.PERCENTAGE">
+            <div class="form-group" >
+                <label> Target value: </label>
+                <p-inputNumber 
+                    [(ngModel)]="targetValue" 
+                    inputId="targetValue" 
+                    mode="currency" 
+                    currency="INR"
+                    name="targetValue" 
+                    [minFractionDigits]="0" 
+                    [maxFractionDigits]="2" /> 
+            </div>
+        </ng-container>
 
-        <div class="form-group" *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE">
-            <label> Percentage: </label>
-            <p-inputNumber 
-                [(ngModel)]="percentage" 
-                inputId="percent" 
-                name="percent" 
-                mode="decimal"
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2"
-                suffix="%" /> 
-        </div>
+        <ng-container *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE">
+            <div class="form-group">
+                <label> Percentage: </label>
+                <p-inputNumber 
+                    [(ngModel)]="percentage" 
+                    inputId="percent" 
+                    name="percent" 
+                    mode="decimal"
+                    [minFractionDigits]="0" 
+                    [maxFractionDigits]="2"
+                    suffix="%" /> 
+            </div>
+        </ng-container>
         
-        <button pButton type="button" label="Calculate" (click)="calculate()"></button>
+        <button pButton type="button" label="Calculate" (click)="calculate()" [disabled]="loading"></button>
 
     </form>
     
-    <div *ngIf="returnType === ReturnTypeEnum.PERCENTAGE && percentageCalculated" class="card" 
-        [ngClass]="{ positive: percentageValue > 0, 'negative': percentageValue <  0}">
-        <div class="percentage-label">
-          Percentage :
+    <ng-container *ngIf="returnType === ReturnTypeEnum.PERCENTAGE && percentageCalculated" >
+        <div class="card" 
+            [ngClass]="{ positive: percentageValue > 0, 'negative': percentageValue <  0}">
+            <div class="percentage-label">
+            Percentage :
+            </div>
+            <div class="value-label">
+                <span #percentageValueEl>
+                    {{ this.percentageValue }}
+                </span>%
+            </div>
         </div>
-        <div class="value-label">
-          {{ this.percentageValue }}%
+    </ng-container>
+    
+    <ng-container *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE && targetValueCalculated">
+        <div  class="card" 
+            [ngClass]="{ positive: totalValue > currentValue, 'negative': totalValue < currentValue}">
+            <div class="percentage-label">
+                Interest: ₹<span #interestValueEl> {{ interestValue }} </span>
+            </div>
+            <div class="value-label">
+                Total: ₹<span #totalValueEl> {{ this.totalValue }} </span>
+            </div>
         </div>
-    </div>
-    <div *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE && targetValueCalculated" class="card" 
-        [ngClass]="{ positive: totalValue > currentValue, 'negative': totalValue < currentValue}">
-        <div class="percentage-label">
-            Interest: {{ interestValue }}
-        </div>
-        <div class="value-label">
-            Total: {{ this.totalValue }}
-        </div>
-    </div>
-      
+    </ng-container>
 </div>
