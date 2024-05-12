@@ -2,19 +2,27 @@ import { NgModule } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
+import { InputNumberModule } from 'primeng/inputnumber';
 
+const FORM_FIELD_MODULES = [
+  CalendarModule,
+  ButtonModule,
+  DropdownModule,
+  InputNumberModule,
+]
+const MODULES = [
+  ...FORM_FIELD_MODULES,
+    CardModule,
+]
 @NgModule({
   declarations: [],
   imports: [
-    CardModule,
-    CalendarModule,
-    ButtonModule,
+    ...MODULES,
   ],
   exports: [
-    CardModule,
-    CalendarModule,
-    ButtonModule,
+    ...MODULES,
   ]
 })
 export class PrimeNgModule { }

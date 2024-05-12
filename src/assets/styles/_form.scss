@@ -1,0 +1,45 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        label {
+            font-weight: bold;
+        }
+        p-calendar .p-calendar,
+        .p-inputnumber,
+        .p-inputwrapper
+        {
+            width: 100%;
+        }
+        .p-dropdown {
+            padding: 8px;
+
+            .p-dropdown-panel {
+
+                border: 1px solid darkgray;
+                p-dropdownitem li{
+                    padding: 8px;
+                }
+            }
+        }
+        .p-inputnumber {
+            input {
+                padding: 8px;
+            }
+        }
+    }
+
+     .p-button {
+        padding: 8px 12px;
+        font-size: 18px;
+        .p-button-label {
+            font-weight: 500 !important;
+        }
+    }
+}

@@ -1,13 +1,18 @@
 .list-container {
-    padding: 10px 10px;
+    padding: 20px 10px;
     display: grid;
+    grid-gap: 20px;
+    grid-template-columns: auto auto; /* Columns adjust based on content */
+    
+    @media screen and (width < 300px) {
+        grid-template-columns: auto; /* Columns adjust based on content */
+    }
     
     ::ng-deep p-card {
         .p-card {
-            width: 50%;
-            background: #2980B9;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            min-width: 150px;
+            border: 1px solid darkgray;
+            // max-width: 300px;
             
             .p-card-header  {
                 text-align: center;
@@ -19,9 +24,9 @@
             .p-card-body {
                 padding: 10px ;
                 .p-card-title {
-                    color: #FFFFFF;
-                    font-size: 16px;
-                    font-weight: 500;
+                    color: black;
+                    font-size: 18px;
+                    font-weight: 700;
                 }
             }
         }

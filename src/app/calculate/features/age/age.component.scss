@@ -1,24 +1,4 @@
 ::ng-deep .age-container {
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            label {
-                font-weight: bold;
-            }
-        }
-
-        ::ng-deep .p-button {
-            padding: 6px 12px;
-            .p-button-label {
-                font-weight: 400 !important;
-            }
-        }
-    }
 
     .p-card {
         padding: 12px 12px;

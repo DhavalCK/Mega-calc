@@ -91,10 +91,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "primeicons"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "primeicons/primeicons.css"
             ],
             "scripts": []
           }
