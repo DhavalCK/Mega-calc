@@ -13,6 +13,7 @@ import { FormatNumberPipe } from './pipes/format-number.pipe';
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
+    
   ], 
   exports: [
     CommonModule,

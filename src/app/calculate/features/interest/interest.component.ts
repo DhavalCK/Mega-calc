@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Chart } from 'chart.js/auto';
 import { timer } from 'rxjs';
 import { ConvertTimePeriod } from 'src/app/shared/data/time-period-convert';
 import { InterestTypeEnum, TimePeriondEnum } from 'src/app/shared/enums/feature-fields.enum';
@@ -69,7 +70,9 @@ export class InterestComponent {
   timeFieldName: string = 'Years';
   timeFieldOptions: any = [];
   interestRateTimeFieldOptions: any = [];
-
+  
+  public pieChart!: Chart | any;
+  
   ngOnInit() {
     this.timePeriodOptions.map((el: any) => {
       if([TimePeriondEnum.YEAR, TimePeriondEnum.MONTH].includes(el.value)) {
@@ -78,6 +81,7 @@ export class InterestComponent {
     });
     this.interestRateTimeFieldOptions = [...this.timePeriodOptions];
   }
+
 
   interestTypeChange() {
     this.calculateBtnClick = false;
@@ -103,9 +107,31 @@ export class InterestComponent {
   calculateBtnClick: boolean = false;
   isLoading: boolean = false;
 
+  calculateCompoundInterest(P: number, r: number, n: number, t: number) {
+    // Convert annual rate to a decimal
+    r = r / 100;
+  
+    const I = Math.pow((1 + (r / n)), n * t);
+    // Calculate compound interest
+    const A = P * I;
+  
+    return A;
+  }
+
+  calculateNthTime(): number {
+    let nthValue: number = 1;
+    if(this.timePeriod !== this.interestRateTimePeriod) {
+      nthValue = ConvertTimePeriod[this.timePeriod][this.interestRateTimePeriod];
+    }
+    return nthValue;
+  }
+
   calculate() {
     this.calculateBtnClick = true;
     this.isLoading = true;
+    if(this.pieChart){
+      this.pieChart.destroy();
+    }
     timer(1000).subscribe(() => {
       this.calculateInterest();
     });
@@ -141,26 +167,30 @@ export class InterestComponent {
       this.totalInterestRate = this.interestValue * 100 / this.initialValue;
     }
     this.isLoading = false;
+    this.initChart();
+
   }
 
-  calculateCompoundInterest(P: number, r: number, n: number, t: number) {
-    // Convert annual rate to a decimal
-    r = r / 100;
-  
-    const I = Math.pow((1 + (r / n)), n * t);
-    // Calculate compound interest
-    const A = P * I;
-  
-    return A;
-  }
-
-  calculateNthTime(): number {
-    let nthValue: number = 1;
-    if(this.timePeriod !== this.interestRateTimePeriod) {
-      nthValue = ConvertTimePeriod[this.timePeriod][this.interestRateTimePeriod];
-    }
-    return nthValue;
-  }
+  initChart(){
+    this.pieChart = new Chart("pie_Chart", {
+        type: 'pie', //this denotes tha type of chart
+        data: {// values on X-Axis
+          labels: ['Initial Value','Interst Value', ],
+          datasets: [{
+            label: 'Interest Dataset',
+            data: [this.initialValue, this.interestValue],
+            backgroundColor: [
+              '#A3D8FF',
+              '#94FFD8',
+            ],
+            hoverOffset: 4
+            }],
+        },
+        options: {
+          aspectRatio:2.5
+        }
+    });
+}
 
   recalculate() {
     if(this.calculateBtnClick && !this.isLoading) {
