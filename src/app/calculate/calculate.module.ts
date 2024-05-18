@@ -6,12 +6,14 @@ import { CalculateRoutingModule } from './calculate-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ReturnPercentComponent } from './features/return-percent/return-percent.component';
+import { InterestComponent } from './features/interest/interest.component';
 
 @NgModule({
   declarations: [
     CalculateComponent,
     AgeComponent,
-    ReturnPercentComponent
+    ReturnPercentComponent,
+    InterestComponent
   ],
   imports: [
     CommonModule,

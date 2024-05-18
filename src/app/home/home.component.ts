@@ -40,7 +40,7 @@ export class HomeComponent {
       let direction: string = index % 2 === 0 ? 'to left' : 'to right';
       if(index <= 1) {
         direction += ' top';
-      } else if(len >= index + 2) {
+      } else if(len < index + 2) {
         direction += ' bottom';
       }
       const bgColor: string = `linear-gradient(${direction}, ${this.bgColors[0]}, ${this.bgColors[1]}, ${this.bgColors[2]})`; 

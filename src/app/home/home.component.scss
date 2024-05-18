@@ -1,24 +1,48 @@
 .list-container {
-    padding: 20px 10px;
+    padding: var(--vertical-margin) var(--horizontal-margin);
     display: grid;
-    grid-gap: 20px;
-    grid-template-columns: auto auto; /* Columns adjust based on content */
+    grid-gap: var(--feature-grid-gap);
+    grid-template-columns: auto auto auto; /* Columns adjust based on content */
     
-    @media screen and (width < 300px) {
+    @media screen and (width <= 768px) {
+        grid-template-columns: calc(50% - 10px) calc(50% - 10px); /* Columns adjust based on content */
+    }
+
+    @media screen and (width <= 350px) {
         grid-template-columns: auto; /* Columns adjust based on content */
     }
-    
+
     ::ng-deep p-card {
         .p-card {
-            min-width: 150px;
+            min-width: 130px;
+            min-height: 150px;
             border: 1px solid darkgray;
-            // max-width: 300px;
+
+            @media screen and (width > 768px) {
+                min-width: 200px;
+                min-height: 200px;
+            }
+
+            @media screen and (width > 1200px) {
+                min-width: 250px;
+                min-height: 250px;
+            }
             
             .p-card-header  {
                 text-align: center;
                 img {
                     width: 100px;
                     height: 100px;
+   
+                    @media screen and (width > 768px) {
+                        width: 150px;
+                        height: 150px;
+                    }
+   
+                    @media screen and (width > 1200px) {
+                        width: 200px;
+                        height: 200px;
+                    }   
                 }
             }
             .p-card-body {
@@ -27,6 +51,15 @@
                     color: black;
                     font-size: 18px;
                     font-weight: 700;
+                    
+                    // For Elipsis text(text...)
+                     white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    @media screen and (width > 768px) {
+                        font-size: 20px;
+                    }
                 }
             }
         }

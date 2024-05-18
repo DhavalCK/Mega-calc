@@ -1,0 +1,82 @@
+.two-fields {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    ::ng-deep p-inputnumber {
+        input.p-inputnumber-input {
+            width: 50%;
+        }
+    }
+}
+
+.custom-suffix {
+    text-transform: lowercase;
+
+    &::first-letter {
+        text-transform: capitalize;
+    }
+}
+
+.card-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+
+    .card {
+        height: auto;
+        background-color: #FFF7F1;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 15px;
+        width: 100%;
+        gap: 10px;
+        font-size: 16px;
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .row {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            width: 300px;
+
+            .label {
+                text-align: end;
+                width: 165px;
+                font-weight: 500;
+            }
+            
+            .value {
+                font-weight: 700;
+                &.future {
+                    font-size: 22px;
+                    color: #5F264A;
+                }
+                &.interest {
+                    font-size: 20px;
+                    color: #1B4242;
+                }
+                &.initial {
+                    color: #240750;
+                }
+                &.interest-rate {
+                    color: #720455;
+                    &.total-interest-rate {
+                        font-size: 22px;
+                        color: #3C0753;
+                    }
+                }
+            }
+        }
+    }
+}

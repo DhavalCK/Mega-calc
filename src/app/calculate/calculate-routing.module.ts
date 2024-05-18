@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgeComponent } from './features/age/age.component';
 import { CalculateComponent } from './calculate.component';
 import { ReturnPercentComponent } from './features/return-percent/return-percent.component';
+import { InterestComponent } from './features/interest/interest.component';
 
 const routes: Routes = [
   { 
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'return-percent',
         component: ReturnPercentComponent
+      },
+      {
+        path: 'interest',
+        component: InterestComponent,
       }
     ]
   }

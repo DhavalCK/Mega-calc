@@ -2,15 +2,26 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
 
     .form-group {
         display: flex;
         flex-direction: column;
         gap: 5px;
         width: 100%;
+        position: relative;
+
         label {
             font-weight: bold;
         }
+        
+        .custom-suffix {
+            position: absolute;
+            right: 0;
+            padding: 8px 12px;
+            bottom: 0;
+        }
+
         p-calendar .p-calendar,
         .p-inputnumber,
         .p-inputwrapper

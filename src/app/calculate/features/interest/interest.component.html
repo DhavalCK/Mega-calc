@@ -1,0 +1,132 @@
+<div class="container interest-rate-container">
+    <form class="form">
+
+        <div class="form-group">
+            <label> Type: </label>
+            <p-dropdown 
+                [options]="interestTypeOptions" 
+                [(ngModel)]="interestType" 
+                optionLabel="name" 
+                optionValue="value"
+                name="interestType"
+                placeholder="Select a Option" 
+                (onChange)="interestTypeChange()"
+                />
+        </div>
+
+        <div class="form-group">
+            <label> Initial value: </label>
+            <p-inputNumber 
+                [(ngModel)]="initialValue" 
+                inputId="initialValue" 
+                name="initialValue" 
+                mode="currency" 
+                currency="INR"
+                [minFractionDigits]="0" 
+                [maxFractionDigits]="2" 
+                (onInput)="recalculate()"
+                /> 
+        </div>
+
+        <div class="form-group">
+            <label> Interest Rate: </label>
+
+            <div class="two-fields">
+                <p-inputNumber 
+                    [(ngModel)]="interestRate" 
+                    inputId="percent" 
+                    name="percent" 
+                    mode="decimal"
+                    [minFractionDigits]="0" 
+                    [maxFractionDigits]="2"
+                    suffix="%" 
+                    (onInput)="recalculate()"
+                    /> 
+                <p-dropdown 
+                    [options]="interestRateTimeFieldOptions" 
+                    [(ngModel)]="interestRateTimePeriod" 
+                    optionLabel="interestName" 
+                    optionValue="value"
+                    name="interestRateTimePeriod"
+                    placeholder="Select a Option" 
+                    (onChange)="recalculate()"
+
+                    />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label> {{ timeFieldName }}: </label>
+            <div class="two-fields">
+                <p-inputNumber 
+                    [(ngModel)]="time" 
+                    inputId="time" 
+                    name="time"
+                    mode="decimal"
+                    [max]="100"
+                    [min]="1"
+
+                    [maxFractionDigits]="0"
+                    (onInput)="recalculate()"
+                    />
+                <p-dropdown 
+                        [options]="timeFieldOptions" 
+                        [(ngModel)]="timePeriod" 
+                        optionLabel="name" 
+                        optionValue="value"
+                        name="timePeriod"
+                        placeholder="Select a Option" 
+                        (onChange)="timePeriodChange($event)"
+                        />
+            </div>
+
+        </div>
+
+        <button pButton type="button" label="Calculate" (click)="calculate()" [disabled]="loading"></button>
+    </form>
+
+    <div class="card-wrapper" *ngIf="calculateBtnClick" #resultCard>
+        <!-- Result Card -->
+        <ng-container *ngIf="!isLoading">
+            <div  class="card">
+                <div class="center-content">
+
+                <div class="row">
+                    <span class="label">Future value: </span>
+                    <span class="value future">{{ futureValue | formatNumber }}</span>
+                </div>
+                <div class="row">
+                    <span class="label">Interest: </span>
+                    <span class="value interest">{{ interestValue | formatNumber}}</span>
+                </div>
+                <div class="row">
+                    <span class="label">Initial Value: </span>
+                    <span class="value initial">{{ initialValue | formatNumber}}</span>
+                </div>
+                <div class="row">
+                    <span class="label">Interest Rate: </span>
+                    <span class="value interest-rate">{{ interestRate | formatNumber: '%' : 'LAST' }}</span>
+                </div>
+                <div class="row">
+                    <span class="label">All time Interest Rate: </span>
+                    <span class="value interest-rate" 
+                        [ngClass]="{ 'total-interest-rate' : interestRate !== totalInterestRate }">
+                        {{ totalInterestRate | formatNumber: '%' : 'LAST'}}
+                    </span>
+                </div>
+            </div>
+
+            </div>
+        </ng-container>
+
+        <!-- Progrees loader -->
+        <ng-container *ngIf="isLoading">
+            <p-progressSpinner 
+            styleClass="w-4rem h-4rem" 
+            strokeWidth="8" 
+            fill="var(--surface-ground)" 
+            animationDuration=".5s" />
+        </ng-container>
+    </div>
+
+</div>
