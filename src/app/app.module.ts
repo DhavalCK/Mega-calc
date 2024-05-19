@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
+import { FormatNumberPipe } from './shared/pipes/format-number.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,9 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    FormatNumberPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TabViewModule } from 'primeng/tabview';
 
 const FORM_FIELD_MODULES = [
   CalendarModule,
@@ -16,6 +17,7 @@ const FORM_FIELD_MODULES = [
 const MODULES = [
   ...FORM_FIELD_MODULES,
     CardModule,
+    TabViewModule
 ]
 @NgModule({
   declarations: [],

@@ -70,9 +70,12 @@ export class InterestComponent {
   timeFieldName: string = 'Years';
   timeFieldOptions: any = [];
   interestRateTimeFieldOptions: any = [];
+  calculateBtnClick: boolean = false;
+  isLoading: boolean = false;
   
+  // Visual data
   public pieChart!: Chart | any;
-  
+
   ngOnInit() {
     this.timePeriodOptions.map((el: any) => {
       if([TimePeriondEnum.YEAR, TimePeriondEnum.MONTH].includes(el.value)) {
@@ -81,7 +84,6 @@ export class InterestComponent {
     });
     this.interestRateTimeFieldOptions = [...this.timePeriodOptions];
   }
-
 
   interestTypeChange() {
     this.calculateBtnClick = false;
@@ -103,9 +105,6 @@ export class InterestComponent {
     }
     this.recalculate();
   }
-
-  calculateBtnClick: boolean = false;
-  isLoading: boolean = false;
 
   calculateCompoundInterest(P: number, r: number, n: number, t: number) {
     // Convert annual rate to a decimal
@@ -136,6 +135,12 @@ export class InterestComponent {
       this.calculateInterest();
     });
   } 
+  
+  recalculate() {
+    if(this.calculateBtnClick && !this.isLoading) {
+      this.calculate();
+    }
+  }
 
   calculateInterest() {
     // console.log('calculateInterest -',this.interestType, InterestTypeEnum.SIMPLE);
@@ -171,6 +176,7 @@ export class InterestComponent {
 
   }
 
+  // Init chart
   initChart(){
     this.pieChart = new Chart("pie_Chart", {
         type: 'pie', //this denotes tha type of chart
@@ -178,7 +184,10 @@ export class InterestComponent {
           labels: ['Initial Value','Interst Value', ],
           datasets: [{
             label: 'Interest Dataset',
-            data: [this.initialValue, this.interestValue],
+            data: [
+              this.initialValue, 
+              this.interestValue
+            ],
             backgroundColor: [
               '#A3D8FF',
               '#94FFD8',
@@ -187,14 +196,9 @@ export class InterestComponent {
             }],
         },
         options: {
-          aspectRatio:2.5
+          aspectRatio: 1.2
         }
     });
-}
-
-  recalculate() {
-    if(this.calculateBtnClick && !this.isLoading) {
-      this.calculate();
-    }
   }
+
 }

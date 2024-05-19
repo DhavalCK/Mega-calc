@@ -129,9 +129,30 @@
         </ng-container>
     </div>
 
-    <div>
-        <div class="chart-container">
-            <canvas  id="pie_Chart" >{{ pieChart }}</canvas>
-      </div>
+    <div class="visual-view" *ngIf="calculateBtnClick" [ngClass]="{ hidden: isLoading }">
+        <p-tabView>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <div class="custom-tab-header">
+                        <i class='pi pi-chart-pie'></i> Chart
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content"> 
+                        <div class="chart-container">
+                            <canvas  id="pie_Chart" >{{ pieChart }}</canvas>
+                        </div>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <div class="custom-tab-header">
+                        <i class='pi pi-table'></i> Table
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content"> 
+                        Table
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
     </div>
 </div>

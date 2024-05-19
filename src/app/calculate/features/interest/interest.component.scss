@@ -80,3 +80,16 @@
         }
     }
 }
+
+.visual-view {
+    .custom-tab-header {
+        width: calc(50vw - var(--horizontal-margin));
+        text-align: center;
+        padding: 10px 0;
+        font-size: 18px;
+    }
+}
+
+.hidden {
+    visibility: hidden;
+}
