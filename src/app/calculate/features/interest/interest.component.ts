@@ -189,8 +189,8 @@ export class InterestComponent {
               this.interestValue
             ],
             backgroundColor: [
-              '#A3D8FF',
-              '#94FFD8',
+              '#5AB2FF',
+              '#5DEBD7',
             ],
             hoverOffset: 4
             }],
