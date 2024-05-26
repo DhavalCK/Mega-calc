@@ -24,6 +24,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px 0;
+    margin-top: 10px;
 
     .card {
         height: auto;
@@ -32,7 +33,7 @@
         border-radius: 8px;
         display: flex;
         flex-direction: column;
-        padding: 10px 15px;
+        padding: 20px 15px;
         width: 100%;
         gap: 10px;
         font-size: 16px;
@@ -52,18 +53,18 @@
 
             .label {
                 text-align: end;
-                width: 165px;
+                width: 150px;
                 font-weight: 500;
             }
             
             .value {
                 font-weight: 700;
                 &.future {
-                    font-size: 22px;
+                    font-size: 20px;
                     color: #5F264A;
                 }
                 &.interest {
-                    font-size: 20px;
+                    font-size: 18px;
                     color: #1B4242;
                 }
                 &.initial {
@@ -72,7 +73,7 @@
                 &.interest-rate {
                     color: #720455;
                     &.total-interest-rate {
-                        font-size: 22px;
+                        font-size: 20px;
                         color: #3C0753;
                     }
                 }
@@ -82,11 +83,32 @@
 }
 
 .visual-view {
+    margin-bottom: 30px;
     .custom-tab-header {
         width: calc(50vw - var(--horizontal-margin));
         text-align: center;
         padding: 10px 0;
         font-size: 18px;
+    }
+
+    .table-tab {
+
+        .form-group {
+            margin: 10px 0;
+            margin-left: auto;
+            width: fit-content;
+            flex-direction: row;
+            align-items: center;
+            label {
+                white-space: nowrap;
+            }
+        }
+        p-table {
+            th,td {
+                padding: 5px 0 ;
+                text-align: center;
+            }
+        }
     }
 }
 
