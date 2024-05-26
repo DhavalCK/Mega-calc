@@ -6,11 +6,11 @@
             [(ngModel)]="dob"
             [showIcon]="true"
             name="dob"
-
             [readonlyInput]="true"
             [inputStyle]="{ width: 'auto', height: '50px', padding: '10px' }"
             placeholder="Select Date of Birth"
             dateFormat="dd M yy"
+            (onSelect)="submitClick ? onSubmit() : null"
             ></p-calendar>
         </div>
         <div class="form-group">
@@ -26,6 +26,8 @@
             [disabled]="true"
             ></p-calendar>
         </div>
+
+        <button pButton type="button" label="Get Age" (click)="onSubmit()"></button>
 
         <div *ngIf="submitClick">
           <p-card header="Age" class="age-card">
@@ -45,8 +47,10 @@
             </ng-template>
           </p-card>
         </div>
+
+        <!-- loader for table -->
+        <app-loader [isLoading]="isLoading"></app-loader>
         
-      <button pButton type="button" label="Calculate" (click)="calculateAge()"></button>
     </form>
   </div>
   

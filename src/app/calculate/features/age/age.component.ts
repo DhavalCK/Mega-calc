@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription, interval, timer } from 'rxjs';
 
 @Component({
   selector: 'app-age',
   templateUrl: './age.component.html',
   styleUrls: ['./age.component.scss']
 })
-export class AgeComponent {
+export class AgeComponent implements OnDestroy {
 
   dob: Date = new Date('1/1/2000');
   today: Date = new Date();
@@ -18,15 +19,13 @@ export class AgeComponent {
   ageMonths: number = 0;
 
   submitClick: boolean = false;
-
-  ngOnInit() {
-
-  }
+  isLoading: boolean = false;
+  timerSubscription!: Subscription;
+  intervalSubscription!: Subscription;
 
   startInterval() {
-
     if(!this.submitClick) {
-      setInterval(() => {
+      this.intervalSubscription = interval(0).subscribe(() => {
         this.calculateAge();
       });
     }
@@ -34,8 +33,6 @@ export class AgeComponent {
   }
 
   calculateAge() {
-    this.startInterval();
-
     const today = new Date();
     const birthday = new Date(this.dob.getFullYear(), this.dob.getMonth(), this.dob.getDate());
 
@@ -60,5 +57,24 @@ export class AgeComponent {
     this.hours = Math.floor((timeUntilBirthday % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     this.minutes = Math.floor((timeUntilBirthday % (1000 * 60 * 60)) / (1000 * 60));
     this.seconds = Math.floor((timeUntilBirthday % (1000 * 60)) / 1000);
+  }
+
+  onSubmit() {
+    this.submitClick  = false;
+    this.isLoading = true;
+    this.intervalSubscription?.unsubscribe();
+    this.timerSubscription?.unsubscribe();
+    
+    this.timerSubscription = timer(500).subscribe(() => {
+      this.startInterval();
+      this.calculateAge();
+      this.isLoading = false;
+      this.submitClick  = true;
+    });
+  }
+
+  ngOnDestroy() {
+    this.timerSubscription?.unsubscribe();
+    this.intervalSubscription?.unsubscribe();
   }
 }
