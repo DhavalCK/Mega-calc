@@ -7,36 +7,30 @@ import { ReturnPercentComponent } from './features/return-percent/return-percent
 import { InterestComponent } from './features/interest/interest.component';
 
 const routes: Routes = [
-  { 
-    path: '',
-    component: CalculateComponent,
-    children: [
-      {
-        path: 'age',
-        component: AgeComponent
-      }, 
-      {
-        path: 'return-percent',
-        component: ReturnPercentComponent
-      },
-      {
-        path: 'interest',
-        component: InterestComponent,
-      }
-    ]
-  }
-  // Define other routes as needed
+    {
+        path: '',
+        component: CalculateComponent,
+        children: [
+            {
+                path: 'age',
+                component: AgeComponent,
+            },
+            {
+                path: 'return-percent',
+                component: ReturnPercentComponent,
+            },
+            {
+                path: 'interest',
+                component: InterestComponent,
+            },
+        ],
+    },
+    // Define other routes as needed
 ];
 
-
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-  ],
-  exports: [
-    RouterModule
-  ]
+    declarations: [],
+    imports: [CommonModule, RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class CalculateRoutingModule { }
+export class CalculateRoutingModule {}

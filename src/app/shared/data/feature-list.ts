@@ -1,4 +1,4 @@
-import { RouteConfig } from "../enums/route-config.enum";
+import { RouteConfig } from '../enums/route-config.enum';
 
 export const FeatureList: any = [
     {
@@ -22,4 +22,4 @@ export const FeatureList: any = [
         route: RouteConfig.INTEREST,
         order: 3,
     },
-  ];
+];

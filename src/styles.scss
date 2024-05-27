@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
-@import "primeicons/primeicons.css";
-@import "assets/styles/variable";
-@import "assets/styles/form";
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'assets/styles/variable';
+@import 'assets/styles/form';
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     padding: 0;
     margin: 0;
 }
@@ -16,7 +18,7 @@ h1.title {
     color: black;
     text-align: center;
     padding: 13px 10px;
-    background-color: #6DD5FA;
+    background-color: #6dd5fa;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* horizontal-offset vertical-offset blur spread color */
     margin-bottom: 20px;
 }

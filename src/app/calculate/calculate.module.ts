@@ -9,17 +9,12 @@ import { ReturnPercentComponent } from './features/return-percent/return-percent
 import { InterestComponent } from './features/interest/interest.component';
 
 @NgModule({
-  declarations: [
-    CalculateComponent,
-    AgeComponent,
-    ReturnPercentComponent,
-    InterestComponent
-  ],
-  imports: [
-    CommonModule,
-    CalculateRoutingModule,
-    RouterModule,
-    SharedModule
-  ]
+    declarations: [
+        CalculateComponent,
+        AgeComponent,
+        ReturnPercentComponent,
+        InterestComponent,
+    ],
+    imports: [CommonModule, CalculateRoutingModule, RouterModule, SharedModule],
 })
-export class CalculateModule { }
+export class CalculateModule {}

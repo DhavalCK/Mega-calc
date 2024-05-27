@@ -9,26 +9,17 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 
 const FORM_FIELD_MODULES = [
-  CalendarModule,
-  ButtonModule,
-  DropdownModule,
-  InputNumberModule,
-  ProgressSpinnerModule,
-]
-const MODULES = [
-  ...FORM_FIELD_MODULES,
-    CardModule,
-    TabViewModule,
-    TableModule
+    CalendarModule,
+    ButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    ProgressSpinnerModule,
 ];
+const MODULES = [...FORM_FIELD_MODULES, CardModule, TabViewModule, TableModule];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    ...MODULES,
-  ],
-  exports: [
-    ...MODULES,
-  ]
+    declarations: [],
+    imports: [...MODULES],
+    exports: [...MODULES],
 })
-export class PrimeNgModule { }
+export class PrimeNgModule {}

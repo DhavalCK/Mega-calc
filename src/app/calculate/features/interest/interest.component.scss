@@ -28,7 +28,7 @@
 
     .card {
         height: auto;
-        background-color: #FFF7F1;
+        background-color: #fff7f1;
         border: 1px solid #ccc;
         border-radius: 8px;
         display: flex;
@@ -56,16 +56,16 @@
                 width: 150px;
                 font-weight: 500;
             }
-            
+
             .value {
                 font-weight: 700;
                 &.future {
                     font-size: 20px;
-                    color: #5F264A;
+                    color: #5f264a;
                 }
                 &.interest {
                     font-size: 18px;
-                    color: #1B4242;
+                    color: #1b4242;
                 }
                 &.initial {
                     color: #240750;
@@ -74,7 +74,7 @@
                     color: #720455;
                     &.total-interest-rate {
                         font-size: 20px;
-                        color: #3C0753;
+                        color: #3c0753;
                     }
                 }
             }
@@ -92,7 +92,6 @@
     }
 
     .table-tab {
-
         .form-group {
             margin: 10px 0;
             margin-left: auto;
@@ -104,8 +103,9 @@
             }
         }
         p-table {
-            th,td {
-                padding: 5px 0 ;
+            th,
+            td {
+                padding: 5px 0;
                 text-align: center;
             }
         }

@@ -1,120 +1,137 @@
 <div class="container interest-rate-container">
     <form class="form">
-
         <div class="form-group">
             <label> Type: </label>
-            <p-dropdown 
-                [options]="interestTypeOptions" 
-                [(ngModel)]="interestType" 
-                optionLabel="name" 
+            <p-dropdown
+                [options]="interestTypeOptions"
+                [(ngModel)]="interestType"
+                optionLabel="name"
                 optionValue="value"
                 name="interestType"
-                placeholder="Select a Option" 
+                placeholder="Select a Option"
                 (onChange)="interestTypeChange()"
-                />
+            />
         </div>
 
         <div class="form-group">
             <label> Initial value: </label>
-            <p-inputNumber 
-                [(ngModel)]="initialValue" 
-                inputId="initialValue" 
-                name="initialValue" 
-                mode="currency" 
+            <p-inputNumber
+                [(ngModel)]="initialValue"
+                inputId="initialValue"
+                name="initialValue"
+                mode="currency"
                 currency="INR"
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2" 
+                [minFractionDigits]="0"
+                [maxFractionDigits]="2"
                 (onInput)="recalculate()"
-                /> 
+            />
         </div>
 
         <div class="form-group">
             <label> Interest Rate: </label>
 
             <div class="two-fields">
-                <p-inputNumber 
-                    [(ngModel)]="interestRate" 
-                    inputId="percent" 
-                    name="percent" 
+                <p-inputNumber
+                    [(ngModel)]="interestRate"
+                    inputId="percent"
+                    name="percent"
                     mode="decimal"
-                    [minFractionDigits]="0" 
+                    [minFractionDigits]="0"
                     [maxFractionDigits]="2"
-                    suffix="%" 
+                    suffix="%"
                     (onInput)="recalculate()"
-                    /> 
-                <p-dropdown 
-                    [options]="interestRateTimeFieldOptions" 
-                    [(ngModel)]="interestRateTimePeriod" 
-                    optionLabel="interestName" 
+                />
+                <p-dropdown
+                    [options]="interestRateTimeFieldOptions"
+                    [(ngModel)]="interestRateTimePeriod"
+                    optionLabel="interestName"
                     optionValue="value"
                     name="interestRateTimePeriod"
-                    placeholder="Select a Option" 
+                    placeholder="Select a Option"
                     (onChange)="interestRateTimePeriodChange()"
-
-                    />
+                />
             </div>
         </div>
 
         <div class="form-group">
             <label> {{ timeFieldName }}: </label>
             <div class="two-fields">
-                <p-inputNumber 
-                    [(ngModel)]="time" 
-                    inputId="time" 
+                <p-inputNumber
+                    [(ngModel)]="time"
+                    inputId="time"
                     name="time"
                     mode="decimal"
                     [max]="100"
                     [min]="1"
                     [maxFractionDigits]="0"
                     (onInput)="recalculate()"
-                    />
-                <p-dropdown 
-                    [options]="timeFieldOptions" 
-                    [(ngModel)]="timePeriod" 
-                    optionLabel="name" 
+                />
+                <p-dropdown
+                    [options]="timeFieldOptions"
+                    [(ngModel)]="timePeriod"
+                    optionLabel="name"
                     optionValue="value"
                     name="timePeriod"
-                    placeholder="Select a Option" 
+                    placeholder="Select a Option"
                     (onChange)="timePeriodChange($event)"
-                    />
+                />
             </div>
-
         </div>
 
-        <button pButton type="button" label="Calculate" (click)="calculate()" [disabled]="loading"></button>
+        <button
+            pButton
+            type="button"
+            label="Calculate"
+            (click)="calculate()"
+            [disabled]="loading"
+        ></button>
     </form>
 
     <div class="card-wrapper" *ngIf="calculateBtnClick" #resultCard>
         <!-- Result Card -->
         <ng-container *ngIf="!isLoading">
-            <div  class="card">
+            <div class="card">
                 <div class="center-content">
-
-                <div class="row">
-                    <span class="label">Future value: </span>
-                    <span class="value future">{{ futureValue | formatNumber }}</span>
+                    <div class="row">
+                        <span class="label">Future value: </span>
+                        <span class="value future">{{
+                            futureValue | formatNumber
+                        }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Interest: </span>
+                        <span class="value interest">{{
+                            interestValue | formatNumber
+                        }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Initial Value: </span>
+                        <span class="value initial">{{
+                            initialValue | formatNumber
+                        }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Interest Rate: </span>
+                        <span class="value interest-rate">{{
+                            interestRate | formatNumber: percentageFormat
+                        }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">All time Interest R. : </span>
+                        <span
+                            class="value interest-rate"
+                            [ngClass]="{
+                                'total-interest-rate':
+                                    interestRate !== totalInterestRate
+                            }"
+                        >
+                            {{
+                                totalInterestRate
+                                    | formatNumber: percentageFormat
+                            }}
+                        </span>
+                    </div>
                 </div>
-                <div class="row">
-                    <span class="label">Interest: </span>
-                    <span class="value interest">{{ interestValue | formatNumber}}</span>
-                </div>
-                <div class="row">
-                    <span class="label">Initial Value: </span>
-                    <span class="value initial">{{ initialValue | formatNumber}}</span>
-                </div>
-                <div class="row">
-                    <span class="label">Interest Rate: </span>
-                    <span class="value interest-rate">{{ interestRate | formatNumber: percentageFormat }}</span>
-                </div>
-                <div class="row">
-                    <span class="label">All time Interest R. : </span>
-                    <span class="value interest-rate" 
-                        [ngClass]="{ 'total-interest-rate' : interestRate !== totalInterestRate }">
-                        {{ totalInterestRate | formatNumber: percentageFormat}}
-                    </span>
-                </div>
-            </div>
-
             </div>
         </ng-container>
 
@@ -123,20 +140,24 @@
     </div>
 
     <!-- Visual view and deatil of interest -->
-    <div class="visual-view" *ngIf="calculateBtnClick" [ngClass]="{ hidden: isLoading }">
+    <div
+        class="visual-view"
+        *ngIf="calculateBtnClick"
+        [ngClass]="{ hidden: isLoading }"
+    >
         <!-- [activeIndex]="1" -->
-        <p-tabView >
+        <p-tabView>
             <!-- Chart Tab -->
             <p-tabPanel class="chart-tab">
                 <ng-template pTemplate="header">
                     <div class="custom-tab-header">
-                        <i class='pi pi-chart-pie'></i> Chart
+                        <i class="pi pi-chart-pie"></i> Chart
                     </div>
                 </ng-template>
-                <ng-template pTemplate="content"> 
-                        <div class="chart-container">
-                            <canvas  id="pie_Chart" >{{ pieChart }}</canvas>
-                        </div>
+                <ng-template pTemplate="content">
+                    <div class="chart-container">
+                        <canvas id="pie_Chart">{{ pieChart }}</canvas>
+                    </div>
                 </ng-template>
             </p-tabPanel>
 
@@ -144,48 +165,77 @@
             <p-tabPanel class="table-tab">
                 <ng-template pTemplate="header">
                     <div class="custom-tab-header">
-                        <i class='pi pi-table'></i> Table
+                        <i class="pi pi-table"></i> Table
                     </div>
                 </ng-template>
-                <ng-template pTemplate="content"> 
+                <ng-template pTemplate="content">
                     <div class="table">
                         <div class="form-group">
                             <label> Breakdown By: </label>
-                            <p-dropdown 
-                                [options]="breakdownOptions" 
-                                [(ngModel)]="breakdown" 
-                                optionLabel="name" 
+                            <p-dropdown
+                                [options]="breakdownOptions"
+                                [(ngModel)]="breakdown"
+                                optionLabel="name"
                                 optionValue="value"
                                 name="selectedBreakdown"
-                                placeholder="Select a Option" 
+                                placeholder="Select a Option"
                                 (onChange)="breakdownChange()"
-                                />
+                            />
                         </div>
 
                         <div class="tablew-wrapper">
                             <ng-container *ngIf="!isTableLoading">
-                                <p-table [value]="tableData" [tableStyle]="{ 'min-width': 'auto' }">
+                                <p-table
+                                    [value]="tableData"
+                                    [tableStyle]="{ 'min-width': 'auto' }"
+                                >
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th>{{ breakdown }}</th>
                                             <th>Interest</th>
-                                            <th>Acc. Interest   </th>
+                                            <th>Acc. Interest</th>
                                             <th>Amount</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-rowData>
                                         <tr>
-                                            <td> {{ rowData.time }}</td>
-                                            <td>{{ (rowData?.interest | formatNumber: { decimalPoint : 2 } )|| '-' }}</td>
-                                            <td>{{ (rowData?.accuredInterest | formatNumber: { decimalPoint : 2 }) || '-'}}</td>
-                                            <td>{{ (rowData?.amount | formatNumber: { decimalPoint : 2 }) || '-' }}</td>
+                                            <td>{{ rowData.time }}</td>
+                                            <td>
+                                                {{
+                                                    (rowData?.interest
+                                                        | formatNumber
+                                                            : {
+                                                                  decimalPoint: 2
+                                                              }) || '-'
+                                                }}
+                                            </td>
+                                            <td>
+                                                {{
+                                                    (rowData?.accuredInterest
+                                                        | formatNumber
+                                                            : {
+                                                                  decimalPoint: 2
+                                                              }) || '-'
+                                                }}
+                                            </td>
+                                            <td>
+                                                {{
+                                                    (rowData?.amount
+                                                        | formatNumber
+                                                            : {
+                                                                  decimalPoint: 2
+                                                              }) || '-'
+                                                }}
+                                            </td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
                             </ng-container>
-                            
+
                             <!-- loader for table -->
-                            <app-loader [isLoading]="isTableLoading"></app-loader>
+                            <app-loader
+                                [isLoading]="isTableLoading"
+                            ></app-loader>
                         </div>
                     </div>
                 </ng-template>

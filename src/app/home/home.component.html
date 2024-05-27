@@ -4,9 +4,14 @@
 
 <!-- List -->
 <div class="list-container">
-    <p-card [header]="item.title" *ngFor="let item of featureList" (click)="navigateTo(item)" id="{{ item.id + '' }}">
+    <p-card
+        [header]="item.title"
+        *ngFor="let item of featureList"
+        (click)="navigateTo(item)"
+        id="{{ item.id + '' }}"
+    >
         <ng-template pTemplate="header">
-            <img alt="Card" src="assets/images/{{item.imgUrl}}" />
+            <img alt="Card" src="assets/images/{{ item.imgUrl }}" />
         </ng-template>
     </p-card>
 </div>

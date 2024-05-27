@@ -4,7 +4,7 @@ form {
     gap: 20px;
     position: relative;
 
-     .p-button {
+    .p-button {
         padding: 8px 12px;
         font-size: 18px;
         .p-button-label {
@@ -23,7 +23,7 @@ form {
     label {
         font-weight: bold;
     }
-    
+
     .custom-suffix {
         position: absolute;
         right: 0;
@@ -33,17 +33,15 @@ form {
 
     p-calendar .p-calendar,
     .p-inputnumber,
-    .p-inputwrapper
-    {
+    .p-inputwrapper {
         width: 100%;
     }
     .p-dropdown {
         padding: 8px;
 
         .p-dropdown-panel {
-
             border: 1px solid darkgray;
-            p-dropdownitem li{
+            p-dropdownitem li {
                 padding: 8px;
             }
         }

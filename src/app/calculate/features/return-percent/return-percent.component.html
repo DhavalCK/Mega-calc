@@ -1,85 +1,106 @@
 <div class="container return-percent-container">
     <form class="form">
-
         <div class="form-group">
             <label> Return: </label>
-            <p-dropdown 
-                [options]="returnOptions" 
-                [(ngModel)]="returnType" 
-                optionLabel="name" 
+            <p-dropdown
+                [options]="returnOptions"
+                [(ngModel)]="returnType"
+                optionLabel="name"
                 optionValue="value"
                 name="selectedReturn"
-                placeholder="Select a Option" 
+                placeholder="Select a Option"
                 (onChange)="returnTypeChange($event)"
-                />
+            />
         </div>
 
         <div class="form-group">
             <label> Current value: </label>
-            <p-inputNumber 
-                [(ngModel)]="currentValue" 
-                inputId="currentValue" 
-                name="currentValue" 
-                mode="currency" 
+            <p-inputNumber
+                [(ngModel)]="currentValue"
+                inputId="currentValue"
+                name="currentValue"
+                mode="currency"
                 currency="INR"
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2" /> 
+                [minFractionDigits]="0"
+                [maxFractionDigits]="2"
+            />
         </div>
 
         <ng-container *ngIf="returnType === ReturnTypeEnum.PERCENTAGE">
-            <div class="form-group" >
+            <div class="form-group">
                 <label> Target value: </label>
-                <p-inputNumber 
-                    [(ngModel)]="targetValue" 
-                    inputId="targetValue" 
-                    mode="currency" 
+                <p-inputNumber
+                    [(ngModel)]="targetValue"
+                    inputId="targetValue"
+                    mode="currency"
                     currency="INR"
-                    name="targetValue" 
-                    [minFractionDigits]="0" 
-                    [maxFractionDigits]="2" /> 
+                    name="targetValue"
+                    [minFractionDigits]="0"
+                    [maxFractionDigits]="2"
+                />
             </div>
         </ng-container>
 
         <ng-container *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE">
             <div class="form-group">
                 <label> Percentage: </label>
-                <p-inputNumber 
-                    [(ngModel)]="percentage" 
-                    inputId="percent" 
-                    name="percent" 
+                <p-inputNumber
+                    [(ngModel)]="percentage"
+                    inputId="percent"
+                    name="percent"
                     mode="decimal"
-                    [minFractionDigits]="0" 
+                    [minFractionDigits]="0"
                     [maxFractionDigits]="2"
                     suffix="%"
                     [min]="0"
-                    [max]="100" />
+                    [max]="100"
+                />
                 <!-- <span class="percentage-sign">
                     %
                 </span>  -->
             </div>
         </ng-container>
-        
-        <button pButton type="button" label="Calculate" (click)="calculate()" [disabled]="loading"></button>
 
+        <button
+            pButton
+            type="button"
+            label="Calculate"
+            (click)="calculate()"
+            [disabled]="loading"
+        ></button>
     </form>
-    
-    <ng-container *ngIf="returnType === ReturnTypeEnum.PERCENTAGE && percentageCalculated" >
-        <div class="card" 
-            [ngClass]="{ positive: percentageValue > 0, 'negative': percentageValue <  0}">
-            <div class="percentage-label">
-            Percentage :
-            </div>
+
+    <ng-container
+        *ngIf="returnType === ReturnTypeEnum.PERCENTAGE && percentageCalculated"
+    >
+        <div
+            class="card"
+            [ngClass]="{
+                positive: percentageValue > 0,
+                negative: percentageValue < 0
+            }"
+        >
+            <div class="percentage-label">Percentage :</div>
             <div class="value-label">
                 <span #percentageValueEl>
-                    {{ this.percentageValue }}
-                </span>%
+                    {{ this.percentageValue }} </span
+                >%
             </div>
         </div>
     </ng-container>
-    
-    <ng-container *ngIf="returnType === ReturnTypeEnum.TARGET_VALUE && targetValueCalculated">
-        <div  class="card" 
-            [ngClass]="{ positive: totalValue > currentValue, 'negative': totalValue < currentValue}">
+
+    <ng-container
+        *ngIf="
+            returnType === ReturnTypeEnum.TARGET_VALUE && targetValueCalculated
+        "
+    >
+        <div
+            class="card"
+            [ngClass]="{
+                positive: totalValue > currentValue,
+                negative: totalValue < currentValue
+            }"
+        >
             <div class="percentage-label">
                 Interest: ₹<span #interestValueEl> {{ interestValue }} </span>
             </div>
