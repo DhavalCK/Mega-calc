@@ -336,7 +336,6 @@ export class InterestComponent implements OnInit, OnDestroy{
         chartAspectRatio = 3;
     }
 
-    console.log('Chart Aspect Ratio:', chartAspectRatio);
     return chartAspectRatio;
   }
 

@@ -40,9 +40,9 @@ export class FormatNumberPipe implements PipeTransform {
   getFormatedCurrency(value: number, decimalPoint?: number): string {
     let len = value.toString().length
       if(len >= 6 && len < 8) {
-        return this.removeZeroAfterDecimal((value / 100000).toFixed(decimalPoint)) + ' Lakh';
+        return this.removeZeroAfterDecimal((value / 100000).toFixed(decimalPoint)) + ' Lac';
       } else {
-        return this.removeZeroAfterDecimal((value / 10000000).toFixed(decimalPoint)) + ' Crore';
+        return this.removeZeroAfterDecimal((value / 10000000).toFixed(decimalPoint)) + ' Cr';
       }
   }
 
