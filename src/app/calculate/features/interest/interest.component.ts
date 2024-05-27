@@ -321,8 +321,28 @@ export class InterestComponent implements OnInit, OnDestroy{
     });  
   }
 
+  getChartAspectRatio() {
+      // default value for width 1500 or more
+    let chartAspectRatio: number = 4;
+    const innerWidth: number = window.innerWidth 
+
+    if (innerWidth < 400) {
+        chartAspectRatio = 1.2;
+    } else if (innerWidth < 600) {
+      chartAspectRatio = 1.6;
+  } else if (innerWidth < 900) {
+        chartAspectRatio = 2;
+    } else if (innerWidth < 1500) {
+        chartAspectRatio = 3;
+    }
+
+    console.log('Chart Aspect Ratio:', chartAspectRatio);
+    return chartAspectRatio;
+  }
+
   // Init chart
   initChart() {
+    const chartAspectRatio: number = this.getChartAspectRatio();
     this.pieChart = new Chart("pie_Chart", {
       type: 'pie', //this denotes tha type of chart
       data: {// values on X-Axis
@@ -341,7 +361,7 @@ export class InterestComponent implements OnInit, OnDestroy{
         }],
       },
       options: {
-        aspectRatio: 1.2
+        aspectRatio: chartAspectRatio
       }
     });
   }
