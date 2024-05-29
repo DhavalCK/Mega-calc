@@ -145,8 +145,10 @@
         *ngIf="calculateBtnClick"
         [ngClass]="{ hidden: isLoading }"
     >
-        <!-- [activeIndex]="1" -->
-        <p-tabView>
+        <p-tabView
+            [activeIndex]="activeTabIndex"
+            (onChange)="onTabChange($event)"
+        >
             <!-- Chart Tab -->
             <p-tabPanel class="chart-tab">
                 <ng-template pTemplate="header">

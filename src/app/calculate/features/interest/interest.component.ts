@@ -6,6 +6,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { TabViewChangeEvent } from 'primeng/tabview/tabview.interface';
 import { Subscription, timer } from 'rxjs';
 import { ConvertTimePeriod } from 'src/app/shared/data/time-period-convert';
 import {
@@ -13,6 +14,10 @@ import {
     TimePeriondEnum,
 } from 'src/app/shared/enums/feature-fields.enum';
 
+enum activeTabIndexEnum {
+    CHART = 0,
+    TABLE = 1,
+}
 @Component({
     selector: 'app-interest',
     templateUrl: './interest.component.html',
@@ -28,9 +33,10 @@ export class InterestComponent implements OnInit, OnDestroy {
     // fields ngModal
     interestType: InterestTypeEnum = InterestTypeEnum.COMPOUNDING;
     // interestType: InterestTypeEnum = InterestTypeEnum.SIMPLE;
+    activeTabIndex = activeTabIndexEnum.CHART;
 
     initialValue: number = 10000;
-    interestRate: number = 7;
+    interestRate: number = 10;
     interestRateTimePeriod: TimePeriondEnum = TimePeriondEnum.MONTH;
     time: number = 1;
     timePeriod: TimePeriondEnum = TimePeriondEnum.YEAR;
@@ -94,18 +100,7 @@ export class InterestComponent implements OnInit, OnDestroy {
 
     // Table
     tableData: any = [];
-    breakdownOptions: any = [
-        {
-            name: 'Month',
-            interestName: 'Monthly',
-            value: TimePeriondEnum.MONTH,
-        },
-        {
-            name: 'Year',
-            interestName: 'Yearly',
-            value: TimePeriondEnum.YEAR,
-        },
-    ];
+    breakdownOptions: any = [];
 
     breakdown: TimePeriondEnum = TimePeriondEnum.YEAR;
 
@@ -118,9 +113,11 @@ export class InterestComponent implements OnInit, OnDestroy {
             }
         });
         this.interestRateTimeFieldOptions = [...this.timePeriodOptions];
+        this.setBreakdownOptions();
         this.calculate();
     }
 
+    // Field value change Functions
     interestTypeChange() {
         this.calculateBtnClick = false;
     }
@@ -154,20 +151,20 @@ export class InterestComponent implements OnInit, OnDestroy {
         this.recalculate();
     }
 
+    // Table - breakdown field set options 
     setBreakdownOptions() {
         this.breakdownOptions = [];
-        const option1 = this.timePeriodOptions.find(
+        const index_1 = this.timePeriodOptions.findIndex(
             (el: any) => this.interestRateTimePeriod === el.value
         );
-        const option2 = this.timePeriodOptions.find(
+        const index_2 = this.timePeriodOptions.findIndex(
             (el: any) => this.timePeriod === el.value
         );
-        if (this.interestRateTimePeriod === this.timePeriod) {
-            this.breakdownOptions.push(option1);
-        } else {
-            this.breakdownOptions.push(option1, option2);
-        }
-        this.breakdown = this.timePeriod;
+        this.breakdownOptions = this.timePeriodOptions.filter(
+            (_: any, index: number) => {
+                return index >= index_1 && index <= index_2;
+            }
+        );
     }
 
     calculateCompoundInterest(P: number, r: number, n: number, t: number) {
@@ -210,7 +207,7 @@ export class InterestComponent implements OnInit, OnDestroy {
             const n: number = this.calculateNthTime(); // Number of times interest applied per year (monthly)
             const interestValue =
                 (this.initialValue * this.interestRate * this.time) / 100;
-            this.initSimpleInterestTableData(n);
+            this.initSimpleInterestTableData();
             this.interestValue = interestValue * n;
             this.futureValue = this.initialValue + this.interestValue;
             this.totalInterestRate =
@@ -233,7 +230,25 @@ export class InterestComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
         this.isTableLoading = false;
-        this.initChart();
+        if (this.activeTabIndex === activeTabIndexEnum.CHART) {
+            const timerSubscription = timer(0).subscribe(() => {
+                this.initChart();
+                timerSubscription.unsubscribe();
+            });
+        } else {
+            this.destoryPieChart();
+        }
+    }
+
+    onTabChange(event: TabViewChangeEvent) {
+        if (event.index === activeTabIndexEnum.CHART) {
+            const timerSubscription = timer(0).subscribe(() => {
+                this.initChart();
+                timerSubscription.unsubscribe();
+            });
+        } else {
+            this.destoryPieChart();
+        }
     }
 
     // Init table related functinos
@@ -248,7 +263,7 @@ export class InterestComponent implements OnInit, OnDestroy {
         this.isTableLoading = true;
         this.timerSubscription = timer(loaderDuration).subscribe(() => {
             if (this.interestType === InterestTypeEnum.SIMPLE) {
-                this.initSimpleInterestTableData(n);
+                this.initSimpleInterestTableData();
             } else {
                 this.initCompoundInterestTableData(n);
             }
@@ -257,7 +272,7 @@ export class InterestComponent implements OnInit, OnDestroy {
     }
 
     // Table Functions
-    initSimpleInterestTableData(nthValue: number) {
+    initSimpleInterestTableData() {
         this.tableData = [];
         this.tableData.push({
             time: 0,
@@ -266,17 +281,32 @@ export class InterestComponent implements OnInit, OnDestroy {
             amount: this.initialValue,
         });
 
+        let nthValue: number = this.calculateNthTime(); // Number of times interest applied per year (monthly)
+        let convertTimeN: number = 1;
+
+        // Calculate convert nth time for breakdown value
+        if(this.timePeriod !== this.breakdown && this.interestRateTimePeriod !== this.breakdown) {
+            const convertTime = ConvertTimePeriod[this.interestRateTimePeriod][this.breakdown];
+            convertTimeN = Math.round(convertTime * nthValue);
+        }
         const R: number = this.interestRate;
         const singleInterestValue = (this.initialValue * R) / 100;
         let accInterest: number = 0;
         // Set default loop time and interest value for breakdown is time period
-        let loopTimes: number = this.time;
-        let interestValue: number = singleInterestValue * nthValue;
+        let loopTimes: number = 1;
+        let interestValue: number = singleInterestValue;
 
-        if (this.breakdown === this.interestRateTimePeriod) {
-            interestValue = singleInterestValue;
+        if(this.breakdown === this.timePeriod) {
+            loopTimes = this.time;
+            interestValue = singleInterestValue * nthValue;
+        } else if (this.breakdown === this.interestRateTimePeriod) {
             loopTimes = this.time * nthValue;
+            interestValue = singleInterestValue;
+        } else {
+            loopTimes = this.time * convertTimeN;
+            interestValue = singleInterestValue * (nthValue / convertTimeN);
         }
+
         Array.from({ length: loopTimes }).forEach((_, loopIndex: number) => {
             const index: number = loopIndex + 1;
             accInterest += interestValue;
@@ -306,6 +336,8 @@ export class InterestComponent implements OnInit, OnDestroy {
         let interestValue: number = 0;
         loopTimes = this.time * nthValue;
         let compundValue: number = this.initialValue;
+        // To keep init compound amount after push data in table  
+        let initCompundAmount: number = this.initialValue;
 
         Array.from({ length: loopTimes }).forEach((_, loopIndex: number) => {
             const index: number = loopIndex + 1;
@@ -315,12 +347,15 @@ export class InterestComponent implements OnInit, OnDestroy {
             accInterest += interestValue;
 
             if (this.breakdown === this.timePeriod && index % nthValue === 0) {
+                const compoundInterestWithAmmount = this.calculateCompoundInterest(initCompundAmount, R, 1, nthValue);
+                const compoundInterest = compoundInterestWithAmmount - initCompundAmount;
                 this.tableData.push({
                     time: index / nthValue,
-                    interest: interestValue,
+                    interest: compoundInterest,
                     accuredInterest: accInterest,
                     amount: this.initialValue + accInterest,
                 });
+                initCompundAmount = this.initialValue + accInterest;
             } else if (this.breakdown === this.interestRateTimePeriod) {
                 this.tableData.push({
                     time: index,
@@ -328,6 +363,21 @@ export class InterestComponent implements OnInit, OnDestroy {
                     accuredInterest: accInterest,
                     amount: this.initialValue + accInterest,
                 });
+            } else if(this.breakdown !== this.timePeriod && this.breakdown !== this.interestRateTimePeriod) {
+                const convertTime = ConvertTimePeriod[this.interestRateTimePeriod][this.breakdown];
+                const convertTimeN = Math.round(convertTime * nthValue) ;
+
+                if(index % (nthValue / convertTimeN) === 0) {
+                    const compoundInterestWithAmmount = this.calculateCompoundInterest(initCompundAmount, R, 1, nthValue / convertTimeN);
+                    const compoundInterest = compoundInterestWithAmmount - initCompundAmount;
+                    this.tableData.push({
+                        time: index * convertTimeN / nthValue,
+                        interest: compoundInterest,
+                        accuredInterest: accInterest,
+                        amount: this.initialValue + accInterest,
+                    });
+                    initCompundAmount = this.initialValue + accInterest;
+                }
             }
         });
     }
@@ -352,6 +402,8 @@ export class InterestComponent implements OnInit, OnDestroy {
 
     // Init chart
     initChart() {
+        this.destoryPieChart();
+
         const chartAspectRatio: number = this.getChartAspectRatio();
         this.pieChart = new Chart('pie_Chart', {
             type: 'pie', //this denotes tha type of chart
@@ -375,5 +427,12 @@ export class InterestComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.timerSubscription?.unsubscribe();
+        this.destoryPieChart();
+    }
+
+    destoryPieChart(): void {
+        if (this.pieChart) {
+            this.pieChart.destroy();
+        }
     }
 }
