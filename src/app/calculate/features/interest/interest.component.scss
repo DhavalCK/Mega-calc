@@ -1,3 +1,7 @@
+.container {
+    padding-bottom: 0;
+}
+
 .two-fields {
     display: flex;
     align-items: center;
@@ -102,6 +106,12 @@
                 white-space: nowrap;
             }
         }
+
+        .table-wrapper {
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
         p-table {
             th,
             td {
