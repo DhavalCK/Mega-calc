@@ -1,4 +1,4 @@
-<div class="container interest-rate-container">
+<div class="container interest-rate-container" id="interestContainer">
     <form class="form">
         <div class="form-group">
             <label> Type: </label>
@@ -144,6 +144,7 @@
         class="visual-view"
         *ngIf="calculateBtnClick"
         [ngClass]="{ hidden: isLoading }"
+        id="visulaView"
     >
         <p-tabView
             [activeIndex]="activeTabIndex"
@@ -185,7 +186,7 @@
                             />
                         </div>
 
-                        <div class="tablew-wrapper">
+                        <div class="table-wrapper">
                             <ng-container *ngIf="!isTableLoading">
                                 <p-table
                                     [value]="tableData"
