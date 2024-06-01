@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appScrollTracker]'
@@ -6,6 +6,7 @@ import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 export class ScrollTrackerDirective implements OnInit {
 
   elementId: string = '';
+  @Output() scrollEnded = new EventEmitter<any>; 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
 
   element!: HTMLElement;
@@ -30,6 +31,7 @@ export class ScrollTrackerDirective implements OnInit {
       let errorTrack: number = 1;
       const isBottomReach = scrollHeight - clientHeight <= scrollTop + errorTrack;
       if(isBottomReach) {
+        this.scrollEnded.emit(true);
         // Perform some task
       }
     });

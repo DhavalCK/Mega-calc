@@ -186,7 +186,8 @@
                             />
                         </div>
 
-                        <div class="table-wrapper">
+                        <div class="table-wrapper" appScrollTracker
+                            (scrollEnded)="tableScrollEndReach($event)">
                             <ng-container *ngIf="!isTableLoading">
                                 <p-table
                                     [value]="tableData"
