@@ -22,3 +22,25 @@ h1.title {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* horizontal-offset vertical-offset blur spread color */
     margin-bottom: 20px;
 }
+
+// Scroll bar Styling
+
+/* Webkit-based browsers */
+::-webkit-scrollbar {
+    width: 9px;               /* Width of the vertical scrollbar */
+    height: 9px;
+    border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #e0f7fa;       /* Light blue background for the scrollbar track */
+}
+  
+::-webkit-scrollbar-thumb {
+    background: #039be5;       /* Blue background for the scrollbar thumb */
+    border-radius: 6px;        /* Rounding corners of the scrollbar thumb */
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #0288d1;       /* Darker blue background for the scrollbar thumb on hover */
+}
+  
