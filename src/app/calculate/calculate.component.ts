@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
     styleUrls: ['./calculate.component.scss'],
 })
 export class CalculateComponent implements OnInit {
-    title: any = 'calc';
+    title: string = 'calc';
 
-    routeConfig: any = RouteConfig as Object;
-    featureTitle: any = FeatureTitle as Object;
+    routeConfig: { [key: string]: string } = RouteConfig;
+    featureTitle: { [key: string]: string } = FeatureTitle ;
 
     constructor(private router: Router) {
         this.title = this.getTitleByRoute();

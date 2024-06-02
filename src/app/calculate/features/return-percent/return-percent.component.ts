@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { interval } from 'rxjs';
-import { ReturnTypeEnum } from 'src/app/shared/enums/feature-fields.enum';
+import { ReturnTypeEnum } from '../../../shared/enums/feature-fields.enum';
+import { DropdownOptions } from '../../../shared/interfaces/common/dropdown-options.interface';
+import { DropdownChangeEvent } from 'primeng/dropdown/dropdown.interface';
 
 @Component({
     selector: 'app-return-percent',
@@ -8,14 +9,14 @@ import { ReturnTypeEnum } from 'src/app/shared/enums/feature-fields.enum';
     styleUrls: ['./return-percent.component.scss'],
 })
 export class ReturnPercentComponent {
-    @ViewChild('percentageValueEl') percentageValueEl: any;
-    @ViewChild('totalValueEl') totalValueEl: any;
-    @ViewChild('interestValueEl') interestValueEl: any;
+    @ViewChild('percentageValueEl') percentageValueEl!: ElementRef;
+    @ViewChild('totalValueEl') totalValueEl!: ElementRef;
+    @ViewChild('interestValueEl') interestValueEl!: ElementRef;
 
     loading: boolean = false;
 
     ReturnTypeEnum = ReturnTypeEnum;
-    returnOptions = [
+    returnOptions: DropdownOptions = [
         {
             name: 'Percentage(%)',
             value: ReturnTypeEnum.PERCENTAGE,
@@ -44,7 +45,7 @@ export class ReturnPercentComponent {
     selectedReturnType: ReturnTypeEnum = ReturnTypeEnum.PERCENTAGE;
     preCurrentValue: number = 100;
 
-    constructor(private elRef: ElementRef) {}
+    constructor() {}
 
     ngOnInit() {}
 
@@ -78,7 +79,7 @@ export class ReturnPercentComponent {
         }
     }
 
-    returnTypeChange(event: any): void {
+    returnTypeChange(event: DropdownChangeEvent): void {
         if (this.selectedReturnType !== this.returnType) {
             this.percentageCalculated = false;
             this.targetValueCalculated = false;
@@ -90,11 +91,11 @@ export class ReturnPercentComponent {
         }
     }
 
-    displayValue(element: any, finalValue: number) {
+    displayValue(element: HTMLElement, finalValue: number) {
         const incrementValue: number = this.roundToTwoDigits(finalValue / 50);
         let displayValue: number = 0;
         let isPositive: boolean = finalValue >= 0;
-        element.textContent = 0;
+        element.textContent = "0";
         let id = setInterval(() => {
             if (
                 (isPositive && displayValue < finalValue) ||
@@ -103,7 +104,7 @@ export class ReturnPercentComponent {
                 displayValue = this.roundToTwoDigits(
                     displayValue + incrementValue
                 );
-                element.textContent = displayValue;
+                element.textContent = displayValue.toString();
             } else {
                 this.loading = false;
                 clearInterval(id);

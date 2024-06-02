@@ -13,8 +13,13 @@ import {
     InterestTypeEnum,
     TimePeriondEnum,
 } from 'src/app/shared/enums/feature-fields.enum';
+import { DropdownOption, DropdownOptions } from '../../../shared/interfaces/common/dropdown-options.interface';
+import { TimePeriodOptions } from '../../../shared/interfaces/interest-feature/time-period-options.interface';
+import { InterestTypeOptions } from '../../../shared/interfaces/interest-feature/interest-type-optioner.interface';
+import { DropdownChangeEvent } from 'primeng/dropdown/dropdown.interface';
+import { InterestTableData } from '../../../shared/interfaces/interest-feature/interest-table-data.interface';
 
-enum activeTabIndexEnum {
+enum ActiveTabIndexEnum {
     CHART = 0,
     TABLE = 1,
 }
@@ -32,7 +37,7 @@ export class InterestComponent implements OnInit, OnDestroy {
 
     // fields ngModal
     interestType: InterestTypeEnum = InterestTypeEnum.COMPOUNDING;
-    activeTabIndex = activeTabIndexEnum.CHART;
+    activeTabIndex: ActiveTabIndexEnum = ActiveTabIndexEnum.CHART;
 
     initialValue: number = 10000;
     interestRate: number = 10;
@@ -48,7 +53,7 @@ export class InterestComponent implements OnInit, OnDestroy {
     loading: boolean = false;
 
     // drop down options
-    interestTypeOptions: any = [
+    interestTypeOptions: InterestTypeOptions = [
         {
             name: 'Simple Interest',
             value: InterestTypeEnum.SIMPLE,
@@ -59,7 +64,7 @@ export class InterestComponent implements OnInit, OnDestroy {
         },
     ];
 
-    timePeriodOptions: any = [
+    timePeriodOptions: TimePeriodOptions = [
         {
             name: 'Day',
             interestName: 'Daily',
@@ -87,8 +92,8 @@ export class InterestComponent implements OnInit, OnDestroy {
         },
     ];
     timeFieldName: string = 'Years';
-    timeFieldOptions: any = [];
-    interestRateTimeFieldOptions: any = [];
+    timeFieldOptions: TimePeriodOptions = [];
+    interestRateTimeFieldOptions: TimePeriodOptions = [];
     calculateBtnClick: boolean = false;
     isLoading: boolean = false;
     isTableLoading: boolean = false;
@@ -98,10 +103,10 @@ export class InterestComponent implements OnInit, OnDestroy {
     public pieChart!: Chart | any;
 
     // Table
-    tableData: any = [];
-    initTableData: any = [];
-    breakdownOptions: any = [];
-    breakdown: TimePeriondEnum = TimePeriondEnum.YEAR;
+    tableData: InterestTableData = [];
+    initTableData: InterestTableData = [];
+    breakdownOptions: TimePeriodOptions = [];
+    breakdown: TimePeriondEnum= TimePeriondEnum.YEAR;
 
     ngOnInit() {
         this.timePeriodOptions.map((el: any) => {
@@ -121,7 +126,7 @@ export class InterestComponent implements OnInit, OnDestroy {
         this.calculateBtnClick = false;
     }
 
-    timePeriodChange(event: any) {
+    timePeriodChange(event: DropdownChangeEvent) {
         if (event.value === TimePeriondEnum.MONTH) {
             const removeTimePeriods = [
                 TimePeriondEnum.QUARTER,
@@ -154,21 +159,23 @@ export class InterestComponent implements OnInit, OnDestroy {
     setBreakdownOptions() {
         this.breakdownOptions = [];
         const option1 = this.timePeriodOptions.find(
-            (el: any) => this.interestRateTimePeriod === el.value
+            (el: DropdownOption) => this.interestRateTimePeriod === el.value
         );
         const option2 = this.timePeriodOptions.find(
-            (el: any) => this.timePeriod === el.value
+            (el: DropdownOption) => this.timePeriod === el.value
         );
-        if(option1.value === option2.value) {
-            this.breakdownOptions.push(option1);
+        if(option1?.value === option2?.value) {
+           if(option1) this.breakdownOptions.push(option1);
         } else {
-            this.breakdownOptions.push(option1, option2);
+            if(option1 && option2) this.breakdownOptions.push(option1, option2);
         }
 
         const selectedBreakdown = this.breakdownOptions.find((el: any) => el.value === this.breakdown);
         if(!selectedBreakdown) {
             const len = this.breakdownOptions.length;
-            this.breakdown = len > 0 ? this.breakdownOptions[len - 1].value : null
+            if(len > 0) {
+                this.breakdown = this.breakdownOptions[len - 1].value; 
+            }
         }
         return;
 
@@ -250,7 +257,7 @@ export class InterestComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
         this.isTableLoading = false;
-        if (this.activeTabIndex === activeTabIndexEnum.CHART) {
+        if (this.activeTabIndex === ActiveTabIndexEnum.CHART) {
             const timerSubscription = timer(0).subscribe(() => {
                 this.initChart();
                 timerSubscription.unsubscribe();
@@ -261,7 +268,7 @@ export class InterestComponent implements OnInit, OnDestroy {
     }
 
     onTabChange(event: TabViewChangeEvent) {
-        if (event.index === activeTabIndexEnum.CHART) {
+        if (event.index === ActiveTabIndexEnum.CHART) {
             const timerSubscription = timer(0).subscribe(() => {
                 this.initChart();
                 timerSubscription.unsubscribe();
@@ -404,7 +411,7 @@ export class InterestComponent implements OnInit, OnDestroy {
         this.tableData = this.initTableData.slice(0, 100);
     }
 
-    tableScrollEndReach(event: any) {
+    tableScrollEndReach() {
         const dataLen = this.tableData.length;
         this.tableData = [...this.tableData, ...this.initTableData.slice(dataLen , dataLen + 100)];
     }
