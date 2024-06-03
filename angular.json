@@ -28,7 +28,8 @@
             "assets": [
               "src/favicon.ico",
               "src/appicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/sitemap.xml"
             ],
             "styles": [
               "src/styles.scss"
